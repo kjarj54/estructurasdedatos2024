@@ -40,6 +40,10 @@ void imprimirNodoSimple(NodeSimple  *nodeSimple){
     while (nodeSimple != NULL)
     {
         cout << nodeSimple->n << " ->";
+        if(nodeSimple-> sig == NULL){
+            cout << "NULL";
+
+        }
         nodeSimple = nodeSimple->sig;
     }
     
@@ -78,6 +82,6 @@ int main(int argc, char const *argv[])
     insertarNodoSimple(nodeSimple, 8);
     insertarNodoSimple(nodeSimple, 9);
     insertarNodoSimple(nodeSimple, 10);
-
+    imprimirNodoSimple(nodeSimple);
     return 0;
 }
