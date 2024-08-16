@@ -68,6 +68,48 @@ void insertarNodoDouble(NodeDouble *&nodeDouble, int numero){
 
 }
 
+void eliminar(NodeSimple *&nodeSimple, int numero){
+    NodeSimple *aux_borrar;
+    NodeSimple *anterior = NULL;
+    aux_borrar = nodeSimple;
+    while ((aux_borrar != NULL) && (aux_borrar->n != numero))
+    {
+        anterior = aux_borrar;
+        aux_borrar = aux_borrar->sig;
+    }
+    if(aux_borrar == NULL){
+        cout << "El elemento no existe";
+    }else if(anterior == NULL){
+        nodeSimple = nodeSimple->sig;
+        delete aux_borrar;
+    }else{
+        anterior->sig = aux_borrar->sig;
+        delete aux_borrar;
+    }
+
+}
+
+void eliminarDouble(NodeDouble *&nodeDouble, int numero){
+    NodeDouble *aux_borrar;
+    NodeDouble *anterior = NULL;
+    aux_borrar = nodeDouble;
+    while ((aux_borrar != NULL) && (aux_borrar->n != numero))
+    {
+        anterior = aux_borrar;
+        aux_borrar = aux_borrar->sig;
+    }
+    if(aux_borrar == NULL){
+        cout << "El elemento no existe";
+    }else if(anterior == NULL){
+        nodeDouble = nodeDouble->sig;
+        delete aux_borrar;
+    }else{
+        anterior->sig = aux_borrar->sig;
+        delete aux_borrar;
+    }
+
+}
+
 int main(int argc, char const *argv[])
 {
     NodeSimple *nodeSimple = NULL;
