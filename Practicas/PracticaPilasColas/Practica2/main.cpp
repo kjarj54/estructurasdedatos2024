@@ -10,20 +10,96 @@ using namespace std;
 
 class Cliente
 {
-    
+
 public:
     string nombre;
-    Cliente* sig;
+    Cliente *sig;
     Cliente();
     ~Cliente();
 };
 
+Cliente::Cliente()
+{
+    nombre = "";
+    sig = NULL;
+}
 
+Cliente::~Cliente()
+{
+    delete sig;
+}
 
+class ListaCliente
+{
+private:
+    Cliente *cabeza;
+
+public:
+    ListaCliente();
+    void agregarCliente(string nombre);
+    void mostrarCliente();
+    void eliminarCliente(string nombre);
+};
+
+ListaCliente::ListaCliente()
+{
+    cabeza = NULL;
+}
+
+void ListaCliente::agregarCliente(string nombre)
+{
+    Cliente *nuevo = new Cliente();
+    nuevo->nombre = nombre;
+    nuevo->sig = cabeza;
+    cabeza = nuevo;
+}
+
+void ListaCliente::mostrarCliente()
+{
+    Cliente *aux = cabeza;
+    while (aux != NULL)
+    {
+        cout << aux->nombre << "->";
+        aux = aux->sig;
+    }
+}
+
+class NodoRegalo
+{
+public:
+    string regalo;
+    NodoRegalo *sig;
+
+    NodoRegalo();
+};
+
+NodoRegalo::NodoRegalo()
+{
+    regalo = "";
+    sig = NULL;
+}
+
+class PilaRegalo
+{
+private:
+    NodoRegalo *tope;
+public:
+    PilaRegalo();
+    void push();
+
+};
+
+void PilaRegalo::push(){
+    NodoRegalo *nuevo = new NodoRegalo();
+    nuevo->sig = tope;
+}
+
+PilaRegalo::PilaRegalo(){
+    tope = NULL;
+}
 
 int main(int argc, char const *argv[])
 {
-    string nombre = "Juan";
-    cout<<nombre<<endl;
+
     return 0;
 }
