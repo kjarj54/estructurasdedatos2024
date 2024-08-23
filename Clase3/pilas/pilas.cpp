@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------------
 
-#include <vcl.h>
+// #include <vcl.h>
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +10,8 @@
 #include <tchar.h>
 //---------------------------------------------------------------------------
 
-#pragma argsused
+
+//#pragma argsused
 /*int *pila[20];
 int tope=0;
 int max=20;  */

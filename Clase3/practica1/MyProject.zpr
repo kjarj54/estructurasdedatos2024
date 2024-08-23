@@ -17,13 +17,13 @@ inherits_from=
 path_char=\
 [source]
 path=list.cpp
-cursor=0:0
+cursor=72:13
 [source]
 path=main.cpp
-cursor=0:0
+cursor=11:1
 [source]
 path=nodo.cpp
-cursor=0:0
+cursor=34:0
 [header]
 path=list.h
 cursor=0:0
