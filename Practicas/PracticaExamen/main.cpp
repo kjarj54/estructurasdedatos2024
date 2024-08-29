@@ -29,14 +29,23 @@ struct Piso {
 
 void insertarEmpleado(Piso* piso, string nombreEmpleado, list<int> cantidades) {
     Empleado nuevoEmpleado(nombreEmpleado);
-    for (int cantidad : cantidades) {
-        nuevoEmpleado.ventas.push_back(Venta(cantidad));
+    auto itCantidades = cantidades.begin();
+    
+    while (itCantidades != cantidades.end()) {
+        nuevoEmpleado.ventas.push_back(Venta(*itCantidades));
+        ++itCantidades;
     }
+
     nuevoEmpleado.ventas.sort([](const Venta& a, const Venta& b) {
         return a.cantidad > b.cantidad;
     });
 
-    nuevoEmpleado.sumatoria = accumulate(cantidades.begin(), cantidades.end(), 0);
+    nuevoEmpleado.sumatoria = 0;
+    auto itCantidad = cantidades.begin();
+    while (itCantidad != cantidades.end()) {
+        nuevoEmpleado.sumatoria += *itCantidad;
+        ++itCantidad;
+    }
 
     auto it = piso->empleados.begin();
     while (it != piso->empleados.end() && it->nombre < nuevoEmpleado.nombre) {
@@ -51,12 +60,20 @@ void mostrarDatos(Piso* inicio) {
     Piso* actual = inicio;
     while (actual != nullptr) {
         cout << "Piso: " << actual->nombre << " - Sumatoria: " << actual->sumatoria << endl;
-        for (const auto& empleado : actual->empleados) {
-            cout << "  Empleado: " << empleado.nombre << " - Sumatoria: " << empleado.sumatoria << endl;
-            for (const auto& venta : empleado.ventas) {
-                cout << "    Venta: " << venta.cantidad << endl;
+        
+        auto itEmpleado = actual->empleados.begin();
+        while (itEmpleado != actual->empleados.end()) {
+            cout << "  Empleado: " << itEmpleado->nombre << " - Sumatoria: " << itEmpleado->sumatoria << endl;
+
+            auto itVenta = itEmpleado->ventas.begin();
+            while (itVenta != itEmpleado->ventas.end()) {
+                cout << "    Venta: " << itVenta->cantidad << endl;
+                ++itVenta;
             }
+
+            ++itEmpleado;
         }
+
         actual = actual->siguiente;
     }
 }
@@ -66,35 +83,48 @@ void verificarSumatorias(Piso* inicio) {
     Piso* actual = inicio;
     while (actual != nullptr) {
         int sumatoriaPiso = 0;
-        for (const auto& empleado : actual->empleados) {
+
+        auto itEmpleado = actual->empleados.begin();
+        while (itEmpleado != actual->empleados.end()) {
             int sumatoriaEmpleado = 0;
-            for (const auto& venta : empleado.ventas) {
-                sumatoriaEmpleado += venta.cantidad;
+
+            auto itVenta = itEmpleado->ventas.begin();
+            while (itVenta != itEmpleado->ventas.end()) {
+                sumatoriaEmpleado += itVenta->cantidad;
+                ++itVenta;
             }
-            if (sumatoriaEmpleado != empleado.sumatoria) {
-                cout << "Error en sumatoria del empleado " << empleado.nombre << " en el piso " << actual->nombre << endl;
+
+            if (sumatoriaEmpleado != itEmpleado->sumatoria) {
+                cout << "Error en sumatoria del empleado " << itEmpleado->nombre << " en el piso " << actual->nombre << endl;
             }
+
             sumatoriaPiso += sumatoriaEmpleado;
+            ++itEmpleado;
         }
+
         if (sumatoriaPiso != actual->sumatoria) {
             cout << "Error en sumatoria del piso " << actual->nombre << endl;
         }
+
         actual = actual->siguiente;
     }
 }
-
 
 void eliminarPiso(Piso*& inicio, string nombrePiso) {
     Piso* actual = inicio;
     while (actual != nullptr && actual->nombre != nombrePiso) {
         actual = actual->siguiente;
     }
+
     if (actual != nullptr) {
         Piso* anterior = actual->anterior;
         if (anterior != nullptr) {
-            for (const auto& empleado : actual->empleados) {
-                insertarEmpleado(anterior, empleado.nombre, { empleado.sumatoria });
+            auto itEmpleado = actual->empleados.begin();
+            while (itEmpleado != actual->empleados.end()) {
+                insertarEmpleado(anterior, itEmpleado->nombre, { itEmpleado->sumatoria });
+                ++itEmpleado;
             }
+
             anterior->siguiente = actual->siguiente;
             if (actual->siguiente != nullptr) {
                 actual->siguiente->anterior = anterior;
@@ -114,7 +144,7 @@ void menu() {
         cin >> opcion;
         switch (opcion) {
             case 1:
-                // Aquí se pueden añadir funciones para agregar empleados
+                
                 break;
             case 2:
                 mostrarDatos(inicio);
