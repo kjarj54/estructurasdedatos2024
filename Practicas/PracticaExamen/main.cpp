@@ -179,7 +179,7 @@ int main() {
     piso2->siguiente = piso3;
     piso3->anterior = piso2;
     insertarEmpleado(piso3, "Pedro", {1000, 500});
-
+    mostrarDatos(inicio);
     menu();
     return 0;
 }
