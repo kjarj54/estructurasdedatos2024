@@ -85,17 +85,24 @@ private:
     NodoRegalo *tope;
 public:
     PilaRegalo();
-    void push();
+    void push(string regalo);
+    string pop();
 
 };
 
-void PilaRegalo::push(){
+void PilaRegalo::push(string regalo){
     NodoRegalo *nuevo = new NodoRegalo();
+    nuevo->regalo= regalo;
     nuevo->sig = tope;
+    tope= nuevo;
 }
 
 PilaRegalo::PilaRegalo(){
     tope = NULL;
+}
+
+string PilaRegalo::pop(){
+    
 }
 
 int main(int argc, char const *argv[])
