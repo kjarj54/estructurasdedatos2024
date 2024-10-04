@@ -124,6 +124,25 @@ void mostrarArbolHorizontal(nodeTree *arbol, int espacio = 0, int incremento = 1
     mostrarArbolHorizontal(arbol->left, espacio);
 }
 
+int contarNodos(nodeTree *arbol) {
+    if (arbol == NULL) {
+        return 0;
+    } else {
+        return 1 + contarNodos(arbol->left) + contarNodos(arbol->right);
+    }
+}
+
+int contarNodos2(nodeTree *arbol, int contador) {
+    if (arbol == NULL) {
+        return contador;
+    } else {
+        contador++;
+        contador = contarNodos2(arbol->left, contador);
+        contador = contarNodos2(arbol->right, contador);
+        return contador;
+    }
+}
+
 int main(int argc, char const *argv[])
 {
 
@@ -139,5 +158,7 @@ int main(int argc, char const *argv[])
     insertarRecursivo(arbol, 20);
 
     mostrarArbolHorizontal(arbol);
+
+    cout <<"Cantidad de nodos:"<< contarNodos(arbol)<<endl;
     return 0;
 }
