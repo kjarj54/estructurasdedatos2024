@@ -21,7 +21,7 @@ int minimoPeso()
 			 return minimo;
 }
 
-int ImprimeArbol()
+void ImprimeArbol()
 {
 	printf("Nodos   Peso\n");
 	for (int i = 1; i < V; i++)
